@@ -1,7 +1,7 @@
 
 // Importações necessárias
 import java.time.LocalDate; // Para manipulação de datas
-import java.util.ArrayList; // Para criação de listas dinâmicas
+import java.util.ArrayList; // Para criação de listas 
 import java.util.Scanner; // Para entrada de dados pelo teclado
 
 // Classe principal do programa
@@ -19,14 +19,20 @@ public class Main {
 
         // Estrutura de repetição para exibir o menu até o usuário sair
         do {
-            // Exibição do menu
+            //Menu
             System.out.println("\n Biblioteca ");
-            System.out.println("1. Cadastrar Livro");
-            System.out.println("2. Cadastrar Usuario");
-            System.out.println("3. Realizar Emprestimo");
-            System.out.println("4. Listar Livros");
-            System.out.println("5. Sair");
+            System.out.println("1. Cadastrar Livro");//OK
+            System.out.println("2. Cadastrar Usuário"); //OK
+            System.out.println("3. Realizar Empréstimo"); //OK
+            System.out.println("4. Devolver livro"); //OK
+            System.out.println("5. Listar Livros");//funciona OK
+            System.out.println("6. Listar livros emprestados e disponíveis"); //FAZER
+            System.out.println("7. Listar histórico de empréstimo"); // FAZER
+            System.out.println("8. Sair"); //OK
             System.out.print("Escolha uma opção: ");
+            //FAZER LISTA DE LIVROS EMPRESTÁDOS E DISPONÍVEIS.
+            //FAZER LISTA DE HISTÓRICOS DE EMPRÉSTIMOS
+            //DEVOLVER LIVRO
 
             // Leitura da opção escolhida pelo usuário
             opcao = scanner.nextInt();
@@ -36,7 +42,7 @@ public class Main {
             switch (opcao) {
                 case 1:
                     // Cadastrar Livro
-                    System.out.print("Titulo: ");
+                    System.out.print("Título: ");
                     String titulo = scanner.nextLine(); // Recebe o título do livro
                     System.out.print("Ano: ");
                     int ano = scanner.nextInt(); // Recebe o ano do livro
@@ -50,7 +56,7 @@ public class Main {
                     livros.add(new Livro(titulo, ano, editora, autor));
                     System.out.println("Livro cadastrado com sucesso!");
                     break;
-
+// ACRESCENTAR VERIFICAÇÃO DOS CAMPOS
                 case 2:
                     // Cadastrar Usuário
                     System.out.print("Nome: ");
@@ -67,12 +73,12 @@ public class Main {
 
                 case 3:
                     // Realizar Empréstimo
-                    System.out.println("Usuarios cadastrados:");
+                    System.out.println("Usuários cadastrados:");
                     // Lista os usuários cadastrados
                     for (int i = 0; i < usuarios.size(); i++) {
                         System.out.println((i + 1) + ". " + usuarios.get(i).getNome());
                     }
-                    System.out.print("Escolha o usuário (número): ");
+                    System.out.print("Escolha o usuario (numero): ");
                     int usuarioIndex = scanner.nextInt() - 1; // Escolha do usuário pelo índice
 
                     System.out.println("Livros disponiveis:");
@@ -93,20 +99,43 @@ public class Main {
 
                         // Calcula as datas de empréstimo e devolução
                         LocalDate dataEmprestimo = LocalDate.now(); // Data atual
-                        LocalDate dataDevolucao = dataEmprestimo.plusDays(14); // Prazo de 14 dias
+                        LocalDate dataDevolucao = dataEmprestimo.plusDays(7); // Prazo 
 
                         // Cria um novo objeto Emprestimo e o adiciona à lista de empréstimos
                         emprestimos.add(new Emprestimo(usuarios.get(usuarioIndex), livroEscolhido, dataEmprestimo,
                                 dataDevolucao));
-                        System.out.println("Empréstimo realizado! Data de devolução: " + dataDevolucao);
+                        System.out.println("Emprestimo realizado! Data de devoluçao: " + dataDevolucao);
                     } else {
                         System.out.println("Livro indisponível.");
                     }
                     break;
 
-                case 4:
+                    case 4:
+     //DEVOLVER LIVRO  
+     System.out.print("Digite o título do livro que deseja devolver: ");
+     String tituloLivro = scanner.nextLine();
+
+     Livro livroSelecionado = null;
+
+     for (Livro livro : livros) {
+         if (livro.getTitulo().equalsIgnoreCase(tituloLivro)) {
+             livroSelecionado = livro;
+             break;
+         }
+     }
+
+     if (livroSelecionado == null) {
+         System.out.println("Livro não encontrado!");
+     } else if (livroSelecionado.isDisponivel()) {
+         System.out.println("Este livro não precisa ser devolvido, já está disponível!");
+     } else {
+         livroSelecionado.setDisponivel(true);
+         System.out.println("Devolução do livro " + livroSelecionado.getTitulo() + " realizada com sucesso!");
+     }
+     break;
+                case 5:
                     // Listar Livros
-                    System.out.println("\n--- Lista de Livros ---");
+                    System.out.println("\nLista de Livros");
                     // Exibe os detalhes de cada livro na lista
                     for (Livro livro : livros) {
                         System.out.println("Título: " + livro.getTitulo() + ", Autor: " + livro.getAutor()
@@ -114,7 +143,12 @@ public class Main {
                     }
                     break;
 
-                case 5:
+case 6: //FAZER Listar livros emprestados e disponíveis
+break;
+
+case 7: //FAZER Listar histórico de empréstimo
+break;
+                case 8:
                     // Sair do sistema
                     System.out.println("Saindo do sistema...");
                     break;
