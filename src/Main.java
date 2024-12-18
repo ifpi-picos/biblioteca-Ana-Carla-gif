@@ -19,18 +19,18 @@ public class Main {
 
         // Estrutura de repetição para exibir o menu até o usuário sair
         do {
-            //Menu
+            // Menu
             System.out.println("\n Biblioteca ");
-            System.out.println("1. Cadastrar Livro");//OK
-            System.out.println("2. Cadastrar Usuário"); //OK
-            System.out.println("3. Realizar Empréstimo"); //OK
-            System.out.println("4. Devolver livro"); //OK
-            System.out.println("5. Listar Livros");//OK
-            System.out.println("6. Listar livros emprestados e disponíveis"); //OK
-            System.out.println("7. Listar histórico de empréstimo");//OK
-            System.out.println("8. Sair"); //OK
+            System.out.println("1. Cadastrar Livro");// OK
+            System.out.println("2. Cadastrar Usuário"); // OK
+            System.out.println("3. Realizar Empréstimo"); // OK
+            System.out.println("4. Devolver livro"); // OK
+            System.out.println("5. Listar Livros");// OK
+            System.out.println("6. Listar livros emprestados e disponíveis"); // OK
+            System.out.println("7. Listar histórico de empréstimo");// OK
+            System.out.println("8. Sair"); // OK
             System.out.print("Escolha uma opção: ");
-            //COLOCAR AS VERIFICAÇOES
+            // COLOCAR AS VERIFICAÇOES
 
             // Leitura da opção escolhida pelo usuário
             opcao = scanner.nextInt();
@@ -53,44 +53,57 @@ public class Main {
                             System.out.println("O título é obrigatório!");
                             continue;
                         }
-                        break;}
-                        // while (true) {
-                        //     System.out.print("ANO DE PUBLICAÇÃO: ");
-                        //     String anoStr = scanner.nextLine().trim(); // lê como String para validar
-                        //     if (anoStr.isEmpty()) {
-                        //         System.out.println("O ano de publicação é obrigatório!");
-                        //         continue;
-                        //     } break;
-                        // } //ORNAIZAR ANO DE PUBLICAÇÃO
-                while (true) {
-                            System.out.print("EDITORA: ");
-                            Editora = scanner.nextLine().trim();
-                            if (Editora.isEmpty()) {
-                                System.out.println("A editora é obrigatória!");
-                                continue;
-                            } break;
+                        break;
+                    }
+                    while (true) {
+                        System.out.print("ANO DE PUBLICAÇÃO: ");
+                        String anoStr = scanner.nextLine().trim(); // Lê o valor como String
+                        if (anoStr.isEmpty()) { // Verifica se o campo está vazio
+                            System.out.println("O ano de publicação é obrigatório!");
+                            continue; // Volta ao início do loop se estiver vazio
                         }
-                 while (true) {
-                            System.out.print("AUTOR: ");
-                            Autor = scanner.nextLine().trim();
-                            if (Autor.isEmpty()) {
-                                System.out.println("O autor é obrigatório!");
-                                continue;
-                            } break;
+                        Ano = Integer.parseInt(anoStr); // Converte o valor para inteiro
+                        break; // Sai do loop se o campo estiver preenchido
+                    }
+                    while (true) {
+                        System.out.print("EDITORA: ");
+                        Editora = scanner.nextLine().trim();
+                        if (Editora.isEmpty()) {
+                            System.out.println("A editora é obrigatória!");
+                            continue;
                         }
+                        break;
+                    }
+                    while (true) {
+                        System.out.print("AUTOR: ");
+                        Autor = scanner.nextLine().trim();
+                        if (Autor.isEmpty()) {
+                            System.out.println("O autor é obrigatório!");
+                            continue;
+                        }
+                        break;
+                    }
 
                     // Cria um novo objeto Livro e o adiciona à lista de livros
                     livros.add(new Livro(Titulo, Ano, Editora, Autor));
                     System.out.println("Livro cadastrado com sucesso!");
 
-                    
                     break;
                 case 2:
-                    // Cadastrar Usuário
+                    // Cadastrar Usuário com validações simples
                     System.out.print("Nome: ");
-                    String nome = scanner.nextLine(); // Recebe o nome do usuário
+                    String nome = scanner.nextLine().trim(); // Recebe o nome do usuário e remove espaços desnecessários
+                    if (nome.isEmpty()) {
+                        System.out.println("O nome não pode ser vazio!");
+                        break;
+                    }
+
                     System.out.print("CPF: ");
-                    String cpf = scanner.nextLine(); // Recebe o CPF do usuário
+                    String cpf = scanner.nextLine().trim(); // Recebe o CPF do usuário
+                    if (cpf.isEmpty() || cpf.length() != 11 || !cpf.matches("\\d+")) {
+                        System.out.println("O CPF deve conter 11 números!");
+                        break;
+                    }
                     System.out.print("E-mail: ");
                     String email = scanner.nextLine(); // Recebe o e-mail do usuário
 
@@ -127,7 +140,7 @@ public class Main {
 
                         // Calcula as datas de empréstimo e devolução
                         LocalDate dataEmprestimo = LocalDate.now(); // Data atual
-                        LocalDate dataDevolucao = dataEmprestimo.plusDays(7); // Prazo 
+                        LocalDate dataDevolucao = dataEmprestimo.plusDays(7); // Prazo
 
                         // Cria um novo objeto Emprestimo e o adiciona à lista de empréstimos
                         emprestimos.add(new Emprestimo(usuarios.get(usuarioIndex), livroEscolhido, dataEmprestimo,
@@ -138,29 +151,30 @@ public class Main {
                     }
                     break;
 
-                    case 4:
-     //DEVOLVER LIVRO  
-     System.out.print("Digite o título do livro que deseja devolver: ");
-     String tituloLivro = scanner.nextLine();
+                case 4:
+                    // DEVOLVER LIVRO
+                    System.out.print("Digite o título do livro que deseja devolver: ");
+                    String tituloLivro = scanner.nextLine();
 
-     Livro livroSelecionado = null;
+                    Livro livroSelecionado = null;
 
-     for (Livro livro : livros) {
-         if (livro.getTitulo().equalsIgnoreCase(tituloLivro)) {
-             livroSelecionado = livro;
-             break;
-         }
-     }
+                    for (Livro livro : livros) {
+                        if (livro.getTitulo().equalsIgnoreCase(tituloLivro)) {
+                            livroSelecionado = livro;
+                            break;
+                        }
+                    }
 
-     if (livroSelecionado == null) {
-         System.out.println("Livro não encontrado!");
-     } else if (livroSelecionado.isDisponivel()) {
-         System.out.println("Este livro não precisa ser devolvido, já está disponível!");
-     } else {
-         livroSelecionado.setDisponivel(true);
-         System.out.println("Devolução do livro " + livroSelecionado.getTitulo() + " realizada com sucesso!");
-     }
-     break;
+                    if (livroSelecionado == null) {
+                        System.out.println("Livro não encontrado!");
+                    } else if (livroSelecionado.isDisponivel()) {
+                        System.out.println("Este livro não precisa ser devolvido, já está disponível!");
+                    } else {
+                        livroSelecionado.setDisponivel(true);
+                        System.out.println(
+                                "Devolução do livro " + livroSelecionado.getTitulo() + " realizada com sucesso!");
+                    }
+                    break;
                 case 5:
                     // Listar Livros
                     System.out.println("\nLista de Livros");
@@ -171,34 +185,33 @@ public class Main {
                     }
                     break;
 
-case 6: 
- // Listar livros emprestados e disponíveis
- System.out.println("\nLivros Disponíveis:");
- for (Livro livro : livros) {
-     if (livro.isDisponivel()) {
-         System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor() + ")");
-     }
- }
+                case 6:
+                    // Listar livros emprestados e disponíveis
+                    System.out.println("\nLivros Disponíveis:");
+                    for (Livro livro : livros) {
+                        if (livro.isDisponivel()) {
+                            System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor() + ")");
+                        }
+                    }
 
- System.out.println("\nLivros Emprestados:");
- for (Livro livro : livros) {
-     if (!livro.isDisponivel()) {
-         System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor() + ")");
-     }
- }
- break;
+                    System.out.println("\nLivros Emprestados:");
+                    for (Livro livro : livros) {
+                        if (!livro.isDisponivel()) {
+                            System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor() + ")");
+                        }
+                    }
+                    break;
 
+                case 7: // FAZER Listar histórico de empréstimo
 
-case 7: //FAZER Listar histórico de empréstimo
- 
- System.out.println("\nHistórico de Empréstimos:");
- for (Emprestimo emprestimo : emprestimos) {
-     System.out.println("Livro: " + emprestimo.getLivro().getTitulo()
-             + " | Usuário: " + emprestimo.getUsuario().getNome()
-             + " | Data de Empréstimo: " + emprestimo.getDataEmprestimo()
-             + " | Data de Devolução: " + emprestimo.getDataDevolucao());
- }
- break;
+                    System.out.println("\nHistórico de Empréstimos:");
+                    for (Emprestimo emprestimo : emprestimos) {
+                        System.out.println("Livro: " + emprestimo.getLivro().getTitulo()
+                                + " | Usuário: " + emprestimo.getUsuario().getNome()
+                                + " | Data de Empréstimo: " + emprestimo.getDataEmprestimo()
+                                + " | Data de Devolução: " + emprestimo.getDataDevolucao());
+                    }
+                    break;
                 case 8:
                     // Sair do sistema
                     System.out.println("Saindo do sistema...");
