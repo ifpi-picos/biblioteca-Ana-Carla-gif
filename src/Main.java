@@ -26,13 +26,11 @@ public class Main {
             System.out.println("3. Realizar Empréstimo"); //OK
             System.out.println("4. Devolver livro"); //OK
             System.out.println("5. Listar Livros");//OK
-            System.out.println("6. Listar livros emprestados e disponíveis"); 
-            System.out.println("7. Listar histórico de empréstimo"); 
+            System.out.println("6. Listar livros emprestados e disponíveis"); //OK
+            System.out.println("7. Listar histórico de empréstimo");//OK
             System.out.println("8. Sair"); //OK
             System.out.print("Escolha uma opção: ");
-            //FAZER LISTA DE LIVROS EMPRESTÁDOS E DISPONÍVEIS.
-            //FAZER LISTA DE HISTÓRICOS DE EMPRÉSTIMOS
-            //DEVOLVER LIVRO
+            //COLOCAR AS VERIFICAÇOES
 
             // Leitura da opção escolhida pelo usuário
             opcao = scanner.nextInt();
@@ -42,21 +40,51 @@ public class Main {
             switch (opcao) {
                 case 1:
                     // Cadastrar Livro
-                    System.out.print("Título: ");
-                    String titulo = scanner.nextLine(); // Recebe o título do livro
-                    System.out.print("Ano: ");
-                    int ano = scanner.nextInt(); // Recebe o ano do livro
-                    scanner.nextLine(); // Consome a quebra de linha
-                    System.out.print("Editora: ");
-                    String editora = scanner.nextLine(); // Recebe a editora do livro
-                    System.out.print("Autor: ");
-                    String autor = scanner.nextLine(); // Recebe o autor do livro
+                    // System.out.print("Título: ");
+                    // String titulo = scanner.nextLine(); // Recebe o título do livro
+                    String Titulo;
+                    int Ano;
+                    String Editora;
+                    String Autor;
+                    while (true) {
+                        System.out.print("TÍTULO: ");
+                        Titulo = scanner.nextLine().trim();
+                        if (Titulo.isEmpty()) {
+                            System.out.println("O título é obrigatório!");
+                            continue;
+                        }
+                        break;}
+                        // while (true) {
+                        //     System.out.print("ANO DE PUBLICAÇÃO: ");
+                        //     String anoStr = scanner.nextLine().trim(); // lê como String para validar
+                        //     if (anoStr.isEmpty()) {
+                        //         System.out.println("O ano de publicação é obrigatório!");
+                        //         continue;
+                        //     } break;
+                        // } //ORNAIZAR ANO DE PUBLICAÇÃO
+                while (true) {
+                            System.out.print("EDITORA: ");
+                            Editora = scanner.nextLine().trim();
+                            if (Editora.isEmpty()) {
+                                System.out.println("A editora é obrigatória!");
+                                continue;
+                            } break;
+                        }
+                 while (true) {
+                            System.out.print("AUTOR: ");
+                            Autor = scanner.nextLine().trim();
+                            if (Autor.isEmpty()) {
+                                System.out.println("O autor é obrigatório!");
+                                continue;
+                            } break;
+                        }
 
                     // Cria um novo objeto Livro e o adiciona à lista de livros
-                    livros.add(new Livro(titulo, ano, editora, autor));
+                    livros.add(new Livro(Titulo, Ano, Editora, Autor));
                     System.out.println("Livro cadastrado com sucesso!");
+
+                    
                     break;
-// ACRESCENTAR VERIFICAÇÃO DOS CAMPOS
                 case 2:
                     // Cadastrar Usuário
                     System.out.print("Nome: ");
@@ -143,7 +171,7 @@ public class Main {
                     }
                     break;
 
-case 6: //FAZER Listar livros emprestados e disponíveis
+case 6: 
  // Listar livros emprestados e disponíveis
  System.out.println("\nLivros Disponíveis:");
  for (Livro livro : livros) {
@@ -162,7 +190,7 @@ case 6: //FAZER Listar livros emprestados e disponíveis
 
 
 case 7: //FAZER Listar histórico de empréstimo
- // Listar histórico de empréstimos
+ 
  System.out.println("\nHistórico de Empréstimos:");
  for (Emprestimo emprestimo : emprestimos) {
      System.out.println("Livro: " + emprestimo.getLivro().getTitulo()
