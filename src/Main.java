@@ -25,9 +25,9 @@ public class Main {
             System.out.println("2. Cadastrar Usuário"); //OK
             System.out.println("3. Realizar Empréstimo"); //OK
             System.out.println("4. Devolver livro"); //OK
-            System.out.println("5. Listar Livros");//funciona OK
-            System.out.println("6. Listar livros emprestados e disponíveis"); //FAZER
-            System.out.println("7. Listar histórico de empréstimo"); // FAZER
+            System.out.println("5. Listar Livros");//OK
+            System.out.println("6. Listar livros emprestados e disponíveis"); 
+            System.out.println("7. Listar histórico de empréstimo"); 
             System.out.println("8. Sair"); //OK
             System.out.print("Escolha uma opção: ");
             //FAZER LISTA DE LIVROS EMPRESTÁDOS E DISPONÍVEIS.
@@ -144,10 +144,33 @@ public class Main {
                     break;
 
 case 6: //FAZER Listar livros emprestados e disponíveis
-break;
+ // Listar livros emprestados e disponíveis
+ System.out.println("\nLivros Disponíveis:");
+ for (Livro livro : livros) {
+     if (livro.isDisponivel()) {
+         System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor() + ")");
+     }
+ }
+
+ System.out.println("\nLivros Emprestados:");
+ for (Livro livro : livros) {
+     if (!livro.isDisponivel()) {
+         System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor() + ")");
+     }
+ }
+ break;
+
 
 case 7: //FAZER Listar histórico de empréstimo
-break;
+ // Listar histórico de empréstimos
+ System.out.println("\nHistórico de Empréstimos:");
+ for (Emprestimo emprestimo : emprestimos) {
+     System.out.println("Livro: " + emprestimo.getLivro().getTitulo()
+             + " | Usuário: " + emprestimo.getUsuario().getNome()
+             + " | Data de Empréstimo: " + emprestimo.getDataEmprestimo()
+             + " | Data de Devolução: " + emprestimo.getDataDevolucao());
+ }
+ break;
                 case 8:
                     // Sair do sistema
                     System.out.println("Saindo do sistema...");
