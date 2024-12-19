@@ -113,7 +113,7 @@ public class Main {
                     break;
 
                 case 3:
-                    // Realizar Empréstimo
+                    // Realizar Empréstimo ARRUMAR 
                     System.out.println("Usuários cadastrados:");
                     // Lista os usuários cadastrados
                     for (int i = 0; i < usuarios.size(); i++) {
@@ -221,7 +221,7 @@ public class Main {
                     // Caso o usuário escolha uma opção inválida
                     System.out.println("Opção inválida. Tente novamente.");
             }
-        } while (opcao != 5); // Continua exibindo o menu até que o usuário escolha a opção de sair
+        } while (opcao != 8); // Continua exibindo o menu até que o usuário escolha a opção de sair
 
         scanner.close(); // Fecha o scanner para liberar recursos
     }
