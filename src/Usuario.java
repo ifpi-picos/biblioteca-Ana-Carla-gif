@@ -3,12 +3,14 @@ public class Usuario {
     private String nome;
     private String cpf;
     private String email;
+    private String preferenciaNotificacao; // nova linha
 
     // Construtor da classe Usuario
-    public Usuario(String nome, String cpf, String email) {
+    public Usuario(String nome, String cpf, String email, String preferenciaNotificacao) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
+        this.preferenciaNotificacao = preferenciaNotificacao; 
     }
 
     // Métodos getter
@@ -23,5 +25,12 @@ public class Usuario {
     public String getEmail() {
         return email;
     }
-}
 
+    public String getPreferenciaNotificacao() {
+        return preferenciaNotificacao;
+    }
+
+    public void setPreferenciaNotificacao(String preferenciaNotificacao) {
+        this.preferenciaNotificacao = preferenciaNotificacao;
+    }
+}

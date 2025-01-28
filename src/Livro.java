@@ -1,10 +1,15 @@
 // Classe Livro
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Livro {
     private String titulo;
     private int ano;
     private String editora;
     private boolean disponivel;
     private String autor;
+    private List<Usuario> listaReservas; // nova linha
 
     // Construtor da classe Livro
     public Livro(String titulo, int ano, String editora, String autor) {
@@ -12,7 +17,9 @@ public class Livro {
         this.ano = ano;
         this.editora = editora;
         this.autor = autor;
-        this.disponivel = true; // Livro começa como disponível 
+        this.disponivel = true; // Livro começa como disponível
+        this.listaReservas = new ArrayList<>(); // NOVA LINHA
+
     }
 
     // Métodos getter e setter
@@ -38,5 +45,17 @@ public class Livro {
 
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
+    }
+
+    public void reservarLivro(Usuario usuario) {
+        listaReservas.add(usuario);
+    }
+
+    public List<Usuario> getReservas() {
+        return listaReservas;
+    }
+
+    public void limparReservas() {
+        listaReservas.clear();
     }
 }
