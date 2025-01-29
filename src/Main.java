@@ -41,14 +41,13 @@ public class Main {
                 case 1:
                     // Cadastrar Livro
 
-                    //DECLARANDO OS TIPOS
+                    // DECLARANDO OS TIPOS
                     String Titulo;
                     int Ano;
                     String Editora;
                     String Autor;
-                    String preferenciaNotificacao; 
-                    String notificarUsuario;
-
+                    String preferenciaNotificacao;
+            
 
                     while (true) {
                         System.out.print("TÍTULO: ");
@@ -130,146 +129,219 @@ public class Main {
                     break;
 
                 case 3:
-
-                
-                    // Realizar Empréstimo ARRUMAR
                     System.out.println("Usuários cadastrados:");
-                    // Lista os usuários cadastrados
                     for (int i = 0; i < usuarios.size(); i++) {
                         System.out.println((i + 1) + ". " + usuarios.get(i).getNome());
                     }
-                    System.out.print("Escolha o usuario (numero): ");
-                    int usuarioIndex = scanner.nextInt() - 1; // Escolha do usuário pelo índice
+                    System.out.print("Escolha o usuário (número): ");
+                    int usuarioIndex = scanner.nextInt() - 1;
+                    scanner.nextLine();
 
-                    System.out.println("Livros disponiveis:");
-                    // Lista os livros disponíveis para empréstimo
+                    System.out.println("Livros disponíveis:");
                     for (int i = 0; i < livros.size(); i++) {
                         if (livros.get(i).isDisponivel()) {
                             System.out.println((i + 1) + ". " + livros.get(i).getTitulo());
                         }
                     }
-                    System.out.print("Escolha o livro (numero): ");
-                    int livroIndex = scanner.nextInt() - 1; // Escolha do livro pelo índice
-                    scanner.nextLine(); // Consome a quebra de linha
+                    System.out.print("Escolha o livro (número): ");
+                    int livroIndex = scanner.nextInt() - 1;
+                    scanner.nextLine();
 
-                    // Recupera o livro escolhido
                     Livro livroEscolhido = livros.get(livroIndex);
-                    if (livroEscolhido.isDisponivel()) { // Verifica se o livro está disponível
-                        livroEscolhido.setDisponivel(false); // Marca o livro como indisponível
+                    livroEscolhido.setDisponivel(false);
 
-                        // Calcula as datas de empréstimo e devolução
-                        LocalDate dataEmprestimo = LocalDate.now(); // Data atual
-                        LocalDate dataDevolucao = dataEmprestimo.plusDays(7); // Prazo
+                    LocalDate dataEmprestimo = LocalDate.now();
+                    LocalDate dataDevolucao = dataEmprestimo.plusDays(7);
 
-                        // Cria um novo objeto Emprestimo e o adiciona à lista de empréstimos
-                        emprestimos.add(new Emprestimo(usuarios.get(usuarioIndex), livroEscolhido, dataEmprestimo, dataDevolucao));
-                        System.out.println("Emprestimo realizado! Data de devoluçao: " + dataDevolucao);
-                    } else {
-                        System.out.println("Livro indisponível.");
+                    Emprestimo novoEmprestimo = new Emprestimo(usuarios.get(usuarioIndex), livroEscolhido,
+                            dataEmprestimo, dataDevolucao);
+                    emprestimos.add(novoEmprestimo);
 
-                    }
+                    System.out.println("Empréstimo realizado! Data de devolução: " + dataDevolucao);
 
-                
-                    //nova linha 
-                    // notificarUsuario(usuarioIndex, "Emprestimo realizado. Livro: " + livroEscolhido.getTitulo());
-                    
-                                        //NOVAS LINHAS
-                            private static void notificarUsuario(Usuario usuario, String mensagem) {
-                                Notificacao notificacao = criarNotificacao(usuario.getPreferenciaNotificacao());
-                                notificacao.enviarNotificacao(usuario, mensagem);
-                            }
-                        
-                            private static Notificacao criarNotificacao(String preferencia) {
-                                switch (preferencia) {
-                                    case "1":
-                                        return new NotificacaoSMS();
-                                    case "2":
-                                        return new NotificacaoWhatsApp();
-                                    case "3":
-                                    default:
-                                        return new NotificacaoEmail();
-                                }
-                            }
-                    
-                                        break;
-                    
-                                    case 4:
-                                        // DEVOLVER LIVRO
-                                        System.out.print("Digite o título do livro que deseja devolver: ");
-                                        String tituloLivro = scanner.nextLine();
-                    
-                                        Livro livroSelecionado = null;
-                    
-                                        for (Livro livro : livros) {
-                                            if (livro.getTitulo().equalsIgnoreCase(tituloLivro)) {
-                                                livroSelecionado = livro;
-                                                break;
-                                            }
-                                        }
-                    
-                                        if (livroSelecionado == null) {
-                                            System.out.println("Livro não encontrado!");
-                                        } else if (livroSelecionado.isDisponivel()) {
-                                            System.out.println("Este livro não precisa ser devolvido, já está disponível!");
-                                        } else {
-                                            livroSelecionado.setDisponivel(true);
-                                            System.out.println(
-                                                    "Devolução do livro " + livroSelecionado.getTitulo() + " realizada com sucesso!");
-                                        }
-                                        break;
-                                    case 5:
-                                        // Listar Livros
-                                        System.out.println("\nLista de Livros");
-                                        // Exibe os detalhes de cada livro na lista
-                                        for (Livro livro : livros) {
-                                            System.out.println("Título: " + livro.getTitulo() + ", Autor: " + livro.getAutor()
-                                                    + ", Disponível: " + livro.isDisponivel());
-                                        }
-                                        break;
-                    
-                                    case 6:
-                                        // Listar livros emprestados e disponíveis
-                                        System.out.println("\nLivros Disponíveis:");
-                                        for (Livro livro : livros) {
-                                            if (livro.isDisponivel()) {
-                                                System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor() + ")");
-                                            }
-                                        }
-                    
-                                        System.out.println("\nLivros Emprestados:");
-                                        for (Livro livro : livros) {
-                                            if (!livro.isDisponivel()) {
-                                                System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor() + ")");
-                                            }
-                                        }
-                                        break;
-                    
-                                    case 7: // FAZER Listar histórico de empréstimo
-                    
-                                        System.out.println("\nHistórico de Empréstimos:");
-                                        for (Emprestimo emprestimo : emprestimos) {
-                                            System.out.println("Livro: " + emprestimo.getLivro().getTitulo()
-                                                    + " | Usuário: " + emprestimo.getUsuario().getNome()
-                                                    + " | Data de Empréstimo: " + emprestimo.getDataEmprestimo()
-                                                    + " | Data de Devolução: " + emprestimo.getDataDevolucao());
-                                        }
-                                        break;
-                                    case 8:
-                                        // Sair do sistema
-                                        System.out.println("Saindo do sistema...");
-                                        break;
-                    
-                                    default:
-                                        // Caso o usuário escolha uma opção inválida
-                                        System.out.println("Opção inválida. Tente novamente.");
-                                }
-                            } while (opcao != 8); // Continua exibindo o menu até que o usuário escolha a opção de sair
-                    
-                            scanner.close(); // Fecha o scanner para liberar recursos
-                        }
-                    
-                        private static void notificarUsuario(int usuarioIndex, String string) {
-                            // TODO Auto-generated method stub
-                            throw new UnsupportedOperationException("Unimplemented method 'notificarUsuario'");
-                        }
+                    notificarUsuario(usuarios.get(usuarioIndex),
+                            "Empréstimo realizado. Livro: " + livroEscolhido.getTitulo());
+                    break;
+
+                case 8:
+                    System.out.println("Saindo do sistema...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 8);
+
+        scanner.close();
+    }
+
+    private static void notificarUsuario(Usuario usuario, String mensagem) {
+        Notificacao notificacao = criarNotificacao(usuario.getPreferenciaNotificacao());
+        notificacao.enviarNotificacao(usuario, mensagem);
+    }
+
+    private static Notificacao criarNotificacao(String preferencia) {
+        switch (preferencia) {
+            case "1":
+                return new NotificacaoSMS();
+            case "2":
+                return new NotificacaoWhatsApp();
+            default:
+                return new NotificacaoEmail();
+        }
+    }
 }
+
+// case 3:
+
+// // Realizar Empréstimo ARRUMAR
+// System.out.println("Usuários cadastrados:");
+// // Lista os usuários cadastrados
+// for (int i = 0; i < usuarios.size(); i++) {
+// System.out.println((i + 1) + ". " + usuarios.get(i).getNome());
+// }
+// System.out.print("Escolha o usuario (numero): ");
+// int usuarioIndex = scanner.nextInt() - 1; // Escolha do usuário pelo índice
+
+// System.out.println("Livros disponiveis:");
+// // Lista os livros disponíveis para empréstimo
+// for (int i = 0; i < livros.size(); i++) {
+// if (livros.get(i).isDisponivel()) {
+// System.out.println((i + 1) + ". " + livros.get(i).getTitulo());
+// }
+// }
+// System.out.print("Escolha o livro (numero): ");
+// int livroIndex = scanner.nextInt() - 1; // Escolha do livro pelo índice
+// scanner.nextLine(); // Consome a quebra de linha
+
+// // Recupera o livro escolhido
+// Livro livroEscolhido = livros.get(livroIndex);
+// if (livroEscolhido.isDisponivel()) { // Verifica se o livro está disponível
+// livroEscolhido.setDisponivel(false); // Marca o livro como indisponível
+
+// // Calcula as datas de empréstimo e devolução
+// LocalDate dataEmprestimo = LocalDate.now(); // Data atual
+// LocalDate dataDevolucao = dataEmprestimo.plusDays(7); // Prazo
+
+// // Cria um novo objeto Emprestimo e o adiciona à lista de empréstimos
+// emprestimos.add(new Emprestimo(usuarios.get(usuarioIndex), livroEscolhido,
+// dataEmprestimo, dataDevolucao));
+// System.out.println("Emprestimo realizado! Data de devoluçao: " +
+// dataDevolucao);
+// } else {
+// System.out.println("Livro indisponível.");
+
+// }
+
+// //nova linha
+// // notificarUsuario(usuarioIndex, "Emprestimo realizado. Livro: " +
+// livroEscolhido.getTitulo());
+
+// //NOVAS LINHAS
+// private static void notificarUsuario(Usuario usuario, String mensagem) {
+// Notificacao notificacao =
+// criarNotificacao(usuario.getPreferenciaNotificacao());
+// notificacao.enviarNotificacao(usuario, mensagem);
+// }
+
+// private static Notificacao criarNotificacao(String preferencia) {
+// switch (preferencia) {
+// case "1":
+// return new NotificacaoSMS();
+// case "2":
+// return new NotificacaoWhatsApp();
+// case "3":
+// default:
+// return new NotificacaoEmail();
+// }
+// }
+
+// break;
+
+// case 4:
+// // DEVOLVER LIVRO
+// System.out.print("Digite o título do livro que deseja devolver: ");
+// String tituloLivro = scanner.nextLine();
+
+// Livro livroSelecionado = null;
+
+// for (Livro livro : livros) {
+// if (livro.getTitulo().equalsIgnoreCase(tituloLivro)) {
+// livroSelecionado = livro;
+// break;
+// }
+// }
+
+// if (livroSelecionado == null) {
+// System.out.println("Livro não encontrado!");
+// } else if (livroSelecionado.isDisponivel()) {
+// System.out.println("Este livro não precisa ser devolvido, já está
+// disponível!");
+// } else {
+// livroSelecionado.setDisponivel(true);
+// System.out.println(
+// "Devolução do livro " + livroSelecionado.getTitulo() + " realizada com
+// sucesso!");
+// }
+// break;
+// case 5:
+// // Listar Livros
+// System.out.println("\nLista de Livros");
+// // Exibe os detalhes de cada livro na lista
+// for (Livro livro : livros) {
+// System.out.println("Título: " + livro.getTitulo() + ", Autor: " +
+// livro.getAutor()
+// + ", Disponível: " + livro.isDisponivel());
+// }
+// break;
+
+// case 6:
+// // Listar livros emprestados e disponíveis
+// System.out.println("\nLivros Disponíveis:");
+// for (Livro livro : livros) {
+// if (livro.isDisponivel()) {
+// System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor()
+// + ")");
+// }
+// }
+
+// System.out.println("\nLivros Emprestados:");
+// for (Livro livro : livros) {
+// if (!livro.isDisponivel()) {
+// System.out.println("- " + livro.getTitulo() + " (Autor: " + livro.getAutor()
+// + ")");
+// }
+// }
+// break;
+
+// case 7: // FAZER Listar histórico de empréstimo
+
+// System.out.println("\nHistórico de Empréstimos:");
+// for (Emprestimo emprestimo : emprestimos) {
+// System.out.println("Livro: " + emprestimo.getLivro().getTitulo()
+// + " | Usuário: " + emprestimo.getUsuario().getNome()
+// + " | Data de Empréstimo: " + emprestimo.getDataEmprestimo()
+// + " | Data de Devolução: " + emprestimo.getDataDevolucao());
+// }
+// break;
+// case 8:
+// // Sair do sistema
+// System.out.println("Saindo do sistema...");
+// break;
+
+// default:
+// // Caso o usuário escolha uma opção inválida
+// System.out.println("Opção inválida. Tente novamente.");
+// }
+// } while (opcao != 8); // Continua exibindo o menu até que o usuário escolha a
+// opção de sair
+
+// scanner.close(); // Fecha o scanner para liberar recursos
+// }
+
+// private static void notificarUsuario(int usuarioIndex, String string) {
+// // TODO Auto-generated method stub
+// throw new UnsupportedOperationException("Unimplemented method
+// 'notificarUsuario'");
+// }
+// }
