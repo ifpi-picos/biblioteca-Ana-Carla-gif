@@ -1,20 +1,24 @@
 package com.example.entity;
-// Classe Usuario
+
 public class Usuario {
+    private int id;
     private String nome;
     private String cpf;
     private String email;
-    private String preferenciaNotificacao; // nova linha
+    private String preferenciaNotificacao;
 
-    // Construtor da classe Usuario
-    public Usuario(String nome, String cpf, String email, String preferenciaNotificacao) {
+    public Usuario(int id, String nome, String cpf, String email, String preferenciaNotificacao) {
+        this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
-        this.preferenciaNotificacao = preferenciaNotificacao; 
+        this.preferenciaNotificacao = preferenciaNotificacao;
     }
 
-    // Métodos getter
+    public int getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -29,9 +33,5 @@ public class Usuario {
 
     public String getPreferenciaNotificacao() {
         return preferenciaNotificacao;
-    }
-
-    public void setPreferenciaNotificacao(String preferenciaNotificacao) {
-        this.preferenciaNotificacao = preferenciaNotificacao;
     }
 }

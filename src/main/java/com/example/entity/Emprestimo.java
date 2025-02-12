@@ -1,5 +1,5 @@
 package com.example.entity;
-// Classe Emprestimo
+
 import java.time.LocalDate;
 
 public class Emprestimo {
@@ -8,7 +8,6 @@ public class Emprestimo {
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
 
-    // Construtor da classe Emprestimo
     public Emprestimo(Usuario usuario, Livro livro, LocalDate dataEmprestimo, LocalDate dataDevolucao) {
         this.usuario = usuario;
         this.livro = livro;
@@ -16,7 +15,6 @@ public class Emprestimo {
         this.dataDevolucao = dataDevolucao;
     }
 
-    // Métodos getter
     public Usuario getUsuario() {
         return usuario;
     }

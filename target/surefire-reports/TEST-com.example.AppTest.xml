@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.example.AppTest" time="0.13" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.example.AppTest" time="0.096" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="BR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-23\bin"/>
-    <property name="sun.java.command" value="C:\Users\ANACAR~1\AppData\Local\Temp\surefire15420137384109059583\surefirebooter13916786941140047571.jar C:\Users\Ana Carla\AppData\Local\Temp\surefire15420137384109059583 2025-02-05T21-17-22_243-jvmRun1 surefire14214704830916608694tmp surefire_05214236091686489419tmp"/>
+    <property name="sun.java.command" value="C:\Users\ANACAR~1\AppData\Local\Temp\surefire3467472082974660811\surefirebooter9920504053455920204.jar C:\Users\Ana Carla\AppData\Local\Temp\surefire3467472082974660811 2025-02-11T09-14-06_243-jvmRun1 surefire3765395162955697693tmp surefire_0985316341726339540tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Ana Carla\Desktop\biblioteca-Ana-Carla-gif\target\test-classes;C:\Users\Ana Carla\Desktop\biblioteca-Ana-Carla-gif\target\classes;C:\Users\Ana Carla\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Ana Carla\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\Ana Carla\.m2\repository\org\postgresql\postgresql\42.7.5\postgresql-42.7.5.jar;C:\Users\Ana Carla\.m2\repository\org\checkerframework\checker-qual\3.48.3\checker-qual-3.48.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\ANACAR~1\AppData\Local\Temp\surefire15420137384109059583\surefirebooter13916786941140047571.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\ANACAR~1\AppData\Local\Temp\surefire3467472082974660811\surefirebooter9920504053455920204.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="23+37-2369"/>
