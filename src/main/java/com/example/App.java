@@ -14,6 +14,10 @@ import com.example.dao.UsuarioDao;
 import com.example.entity.Emprestimo;
 import com.example.entity.Livro;
 import com.example.entity.Usuario;
+import com.example.entity.Notificacao;
+import com.example.entity.NotificacaoEmail;
+import com.example.entity.NotificacaoSMS;
+import com.example.entity.NotificacaoWhatsApp;
 
 public class App {
     public static void main(String[] args) {
@@ -142,7 +146,14 @@ public class App {
             System.out.println((i + 1) + ". " + usuarios.get(i).getNome() + " (ID: " + usuarios.get(i).getId() + ")");
         }
         System.out.print("Escolha o usuário: ");
-        int userIdx = scanner.nextInt() - 1;
+        int userIdx = scanner.nextInt() - 1; // Ajusta para índice 0
+        scanner.nextLine();
+
+        // Verifica se o índice do usuário é válido
+        if (userIdx < 0 || userIdx >= usuarios.size()) {
+            System.out.println("Índice de usuário inválido!");
+            return;
+        }
 
         List<Livro> disponiveis = livroDao.consultar().stream()
                 .filter(Livro::isDisponivel)
@@ -157,8 +168,14 @@ public class App {
             System.out.println((i + 1) + ". " + disponiveis.get(i).getTitulo() + " (ID: " + disponiveis.get(i).getId() + ")");
         }
         System.out.print("Escolha o livro: ");
-        int livroIdx = scanner.nextInt() - 1;
+        int livroIdx = scanner.nextInt() - 1; // Ajusta para índice 0
         scanner.nextLine();
+
+        // Verifica se o índice do livro é válido
+        if (livroIdx < 0 || livroIdx >= disponiveis.size()) {
+            System.out.println("Índice de livro inválido!");
+            return;
+        }
 
         Usuario usuario = usuarios.get(userIdx);
         Livro livro = disponiveis.get(livroIdx);
@@ -172,6 +189,10 @@ public class App {
                 LocalDate.now(),
                 LocalDate.now().plusDays(7));
         emprestimoDao.adicionar(emp);
+
+        // Notificação de empréstimo
+        Notificacao notificacao = getNotificacao(usuario.getPreferenciaNotificacao());
+        notificacao.enviarNotificacao(usuario, "Empréstimo realizado com sucesso para o livro: " + livro.getTitulo());
 
         System.out.println("Empréstimo registrado!");
     }
@@ -190,8 +211,14 @@ public class App {
                     " - " + emp.getUsuario().getNome() + " (ID Usuário: " + emp.getUsuario().getId() + ", ID Livro: " + emp.getLivro().getId() + ")");
         }
         System.out.print("Escolha o empréstimo para devolver: ");
-        int empIdx = scanner.nextInt() - 1;
+        int empIdx = scanner.nextInt() - 1; // Ajusta para índice 0
         scanner.nextLine();
+
+        // Verifica se o índice do empréstimo é válido
+        if (empIdx < 0 || empIdx >= emprestimos.size()) {
+            System.out.println("Índice de empréstimo inválido!");
+            return;
+        }
 
         Emprestimo emp = emprestimos.get(empIdx);
         emprestimoDao.remover(emp.getUsuario().getId(), emp.getLivro().getId());
@@ -199,6 +226,10 @@ public class App {
         Livro livro = livroDao.consultarPorId(emp.getLivro().getId());
         livro.setDisponivel(true);
         livroDao.alterar(livro);
+
+        // Notificação de devolução
+        Notificacao notificacao = getNotificacao(emp.getUsuario().getPreferenciaNotificacao());
+        notificacao.enviarNotificacao(emp.getUsuario(), "Livro devolvido com sucesso: " + livro.getTitulo());
 
         System.out.println("Livro devolvido com sucesso!");
     }
@@ -226,14 +257,33 @@ public class App {
                 .filter(l -> !l.isDisponivel())
                 .forEach(l -> System.out.println(l.getId() + " - " + l.getTitulo() + " - " + l.getAutor()));
     }
-
+//mechi aqui
     private static void listarHistoricoEmprestimos(EmprestimoDao emprestimoDao) {
         List<Emprestimo> emprestimos = emprestimoDao.consultar();
         System.out.println("\nHistórico de empréstimos:");
         for (Emprestimo emp : emprestimos) {
-            System.out.println(emp.getLivro().getId() + " - " + emp.getLivro().getTitulo() + " - " +
-                    emp.getUsuario().getId() + " - " + emp.getUsuario().getNome() + " - " +
-                    emp.getDataEmprestimo() + " a " + emp.getDataDevolucao());
+            System.out.println("Livro: " + emp.getLivro().getTitulo()
+            + " | Usuário: " + emp.getUsuario().getNome()
+            + " | Data de Empréstimo: " + emp.getDataEmprestimo()
+            + " | Data de Devolução: " + emp.getDataDevolucao());
+
+        //     System.out.println(emp.getLivro().getId() + " - " + emp.getLivro().getTitulo() + " - " +
+        //             emp.getUsuario().getId() + " - " + emp.getUsuario().getNome() + " - " +
+        //             emp.getDataEmprestimo() + " a " + emp.getDataDevolucao());
+        }
+    }
+
+    // Método para obter a notificação com base na preferência do usuário
+    private static Notificacao getNotificacao(String preferencia) {
+        switch (preferencia) {
+            case "1":
+                return new NotificacaoSMS();
+            case "2":
+                return new NotificacaoWhatsApp();
+            case "3":
+                return new NotificacaoEmail();
+            default:
+                return new NotificacaoEmail(); // Padrão para e-mail
         }
     }
 }
